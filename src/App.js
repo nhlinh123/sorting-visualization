@@ -1,10 +1,10 @@
 import './App.css';
-import BubbleSort from "./components/bubbleSort";
+import Dashboard from "./components/dashboard";
 
 function App() {
   return (
     <div className="App">
-      <BubbleSort></BubbleSort>
+      <Dashboard />
     </div>
   );
 }

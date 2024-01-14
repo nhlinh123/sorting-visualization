@@ -49,7 +49,9 @@ const BubbleSort = () => {
 
     return (
         <div>
-            <button className="bg-indigo-500 px-2 py-1" onClick={bubbleSort}>Sort</button>
+            <div className="flex flex-col gap-3 items-center mb-3">
+                <button className="w-32 bg-orange-400 px-2 py-1" onClick={bubbleSort}>Sort</button>
+            </div>
             <div className="flex flex-row items-start h-96">
                 {array.map((value, idx) => (
                     <div
