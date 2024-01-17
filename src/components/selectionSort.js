@@ -1,6 +1,7 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from  'react';
 
-const InsertionSort = () => {
+
+const SelectionSort = () => {
     const [array, setArray] = useState([]);
     const [currentIdx, setCurrentIdx] = useState(-1);
     const [swappedIdx, setSwappedIdx] = useState(-1);
@@ -17,37 +18,35 @@ const InsertionSort = () => {
         setArray(newArray);
     };
 
-
-
-    const insertionSort = async () => {
+    const handleSort = async () => {
         let newArray = [...array];
-        for (let i = 1; i < newArray.length; i++) {
-            let current = newArray[i];
-            let j = i - 1;
+        const length = newArray.length;
+        if (length < 1) return;
     
+        for (let i = 0; i < length; i++) {
+            let minIndex = i;
             setCurrentIdx(i);
-            
-            while ((j > -1) && (current < newArray[j])) {
-                newArray[j + 1] = newArray[j];
-                setSwappedIdx(j);
-                j--;
-                
-                // Cập nhật trạng thái UI tại mỗi bước
-                setArray([...newArray]);
-                await new Promise(resolve => setTimeout(resolve, 100)); // Đợi một khoảng thời gian để hiển thị trạng thái trên UI
+            for (let j = i + 1; j < length; j++) {
+                if (newArray[j] < newArray[minIndex]) {
+                    minIndex = j;
+                }
+                setSwappedIdx(minIndex);
             }
-            newArray[j + 1] = current;
+            if (minIndex !== i) {
+                [newArray[i], newArray[minIndex]] = [newArray[minIndex], newArray[i]];
+                setArray([...newArray]); // Cập nhật mảng sau mỗi lần hoán đổi
+                await new Promise(resolve => setTimeout(resolve, 100)); // Độ trễ để hiển thị trên UI
+            }
         }
-        // Cuối cùng cập nhật mảng sau khi sắp xếp xong
-        setArray(newArray);
         setCurrentIdx(-1);
         setSwappedIdx(-1);
     }
+    
 
     return (
         <div>
             <div className="flex flex-col gap-3 items-center mb-3">
-                <button className="w-32 bg-orange-400 px-2 py-1" onClick={insertionSort}>Sort</button>
+                <button className="w-32 bg-orange-400 px-2 py-1" onClick={handleSort}>Sort</button>
             </div>
             <div className="flex flex-row justify-center items-start h-96">
                 {array.map((value, idx) => (
@@ -59,7 +58,7 @@ const InsertionSort = () => {
                 ))}
             </div>
         </div>
-    );
+    )
 }
 
-export default InsertionSort;
+export default SelectionSort;

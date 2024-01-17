@@ -2,15 +2,16 @@ import { useState, useEffect } from 'react';
 import BubbleSort from './bubbleSort';
 import InsertionSort from './insertionSort';
 import MergeSort from './mergeSort';
+import SelectionSort from './selectionSort';
 
 const Dashboard = () => {
     const [currentAlgorithms, setCurrentAlgorithms] = useState('bubbleSort');
     const sortAlgorithm = [
         'bubbleSort',
         'insertionSort',
-        // 'selectionSort',
-        // 'quickSort',
         'mergeSort',
+        'selectionSort',
+        // 'quickSort',
         // 'countSort',
         // 'radixSort',
         // 'heapSort',
@@ -38,6 +39,8 @@ const Dashboard = () => {
                 return <InsertionSort/>;
             case 'mergeSort':
                 return <MergeSort/>;
+            case 'selectionSort':
+                return <SelectionSort/>;
             default:
                 return <div className="flex justify-center">{currentAlgorithms} name not found!!</div>;
         }
