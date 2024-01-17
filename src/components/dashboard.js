@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import BubbleSort from './bubbleSort';
+import InsertionSort from './insertionSort';
 
 const Dashboard = () => {
     const [currentAlgorithms, setCurrentAlgorithms] = useState('bubbleSort');
-
     const sortAlgorithm = [
         'bubbleSort',
         'insertionSort',
@@ -33,6 +33,8 @@ const Dashboard = () => {
         switch(currentAlgorithms) {
             case 'bubbleSort':
                 return <BubbleSort/>;
+            case 'insertionSort':
+                return <InsertionSort/>;
             default:
                 return <div className="flex justify-center">{currentAlgorithms} name not found!!</div>;
         }
