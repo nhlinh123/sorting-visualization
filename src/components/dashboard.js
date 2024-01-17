@@ -8,16 +8,16 @@ const Dashboard = () => {
     const sortAlgorithm = [
         'bubbleSort',
         'insertionSort',
-        'selectionSort',
-        'quickSort',
+        // 'selectionSort',
+        // 'quickSort',
         'mergeSort',
-        'countSort',
-        'radixSort',
-        'heapSort',
-        'cyclicSort',
-        'timSort',
-        'bitonicSort',
-        'bucketSort',
+        // 'countSort',
+        // 'radixSort',
+        // 'heapSort',
+        // 'cyclicSort',
+        // 'timSort',
+        // 'bitonicSort',
+        // 'bucketSort',
     ]
 
 

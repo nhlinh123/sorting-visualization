@@ -38,14 +38,12 @@ const MergeSort = () => {
             } else {
                 result.push(right[rightIndex++]);
             }
-            await new Promise(resolve => setTimeout(resolve, 100));
+            setSwappedIdx(startIndex + result.length - 1);
+            await new Promise(resolve => setTimeout(() => resolve, 100));
         }
     
         const merged = result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
-        for (let i = 0; i < merged.length; i++) {
-            setSwappedIdx(startIndex + i);
-            await new Promise(resolve => setTimeout(resolve, 100));
-        }
+        setArray(merged);
         return merged;
     }
     
@@ -55,6 +53,7 @@ const MergeSort = () => {
         setCurrentIdx(-1);
         setSwappedIdx(-1);
     }
+    
 
     return (
         <div>
