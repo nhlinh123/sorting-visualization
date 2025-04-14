@@ -1,48 +1,64 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useTimer } from '../hooks/useTimer';
 import { useCompletionAnimation } from '../hooks/useCompletionAnimation';
 import { useArrayAnimation } from '../hooks/useArrayAnimation';
 
-const BubbleSort = () => {
+const QuickSort = () => {
     const { array, currentIdx, swappedIdx, generateArray, updateArray } = useArrayAnimation(40);
     const { elapsedTime, startTimer, stopTimer, resetTimer } = useTimer();
     const { completedIndices, animateCompletion } = useCompletionAnimation(40);
 
     useEffect(() => {
         generateArray();
-    }, []); // Remove generateArray from dependencies
+    }, [generateArray]);
 
-    const bubbleSort = useCallback(async () => {
+    const quickSort = async () => {
         resetTimer();
         startTimer();
-        const arrCopy = [...array];
-        
-        for (let i = 0; i < arrCopy.length - 1; i++) {
-            for (let j = 0; j < arrCopy.length - i - 1; j++) {
-                if (arrCopy[j] > arrCopy[j + 1]) {
-                    [arrCopy[j], arrCopy[j + 1]] = [arrCopy[j + 1], arrCopy[j]];
-                    await updateArray(arrCopy, j, j + 1);
-                }
-            }
-        }
-
-        await updateArray(arrCopy, -1, -1);
+        const arr = [...array];
+        await quickSortHelper(arr, 0, arr.length - 1);
+        await updateArray(arr, -1, -1);
         await animateCompletion();
         stopTimer();
-    }, [array, updateArray, resetTimer, startTimer, stopTimer, animateCompletion]);
+    };
+
+    const quickSortHelper = async (arr, low, high) => {
+        if (low < high) {
+            const pi = await partition(arr, low, high);
+            await quickSortHelper(arr, low, pi - 1);
+            await quickSortHelper(arr, pi + 1, high);
+        }
+    };
+
+    const partition = async (arr, low, high) => {
+        const pivot = arr[high];
+        let i = low - 1;
+
+        for (let j = low; j < high; j++) {
+            await updateArray(arr, j, high);
+            if (arr[j] < pivot) {
+                i++;
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+                await updateArray(arr, i, j);
+            }
+        }
+        [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+        await updateArray(arr, i + 1, high);
+        return i + 1;
+    };
 
     return (
         <div>
             <div className="flex flex-col gap-3 items-center mb-3">
-                <button className="w-32 bg-orange-400 px-2 py-1" onClick={bubbleSort}>Sort</button>
+                <button className="w-32 bg-orange-400 px-2 py-1" onClick={quickSort}>Sort</button>
             </div>
             <div className="flex flex-row justify-center items-start h-96">
                 {array.map((value, idx) => (
                     <div
                         className={`w-10 mr-1 transition-colors duration-300 ${
                             completedIndices[idx] ? 'bg-green-500' : 
+                            idx === swappedIdx ? 'bg-red-500' : 
                             idx === currentIdx ? 'bg-orange-500' : 
-                            idx === swappedIdx ? 'bg-green-500' : 
                             'bg-blue-500'
                         }`}
                         key={idx}
@@ -57,4 +73,4 @@ const BubbleSort = () => {
     );
 };
 
-export default BubbleSort;
+export default QuickSort;
